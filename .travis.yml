@@ -13,3 +13,10 @@ after_success:
   - docker build -t matanmor/multi-nginx ./nginx
   - docker build -t matanmor/multi-server ./server
   - docker build -t matanmor/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push matanmor/multi-client
+  - docker push matanmor/multi-nginx
+  - docker push matanmor/multi-server
+  - docker push matanmor/multi-worker
