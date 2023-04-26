@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t matanmor/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true matanmor/react-test npm test
+
+after_success:
+  - docker build -t matanmor/multi-client ./client
+  - docker build -t matanmor/multi-nginx ./nginx
+  - docker build -t matanmor/multi-server ./server
+  - docker build -t matanmor/multi-worker ./worker
